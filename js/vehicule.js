@@ -1,15 +1,5 @@
 $(function () {
 
-
-    let onglet = $('.nav-link');
-    console.log(onglet);
-    onglet.each(function () {
-        if ($(this).attr('href') == $(location).attr('href')) {
-            $(this).addClass('active');
-        } else { $(this).remove('active');}
-    });
-
-
     //declaration de variable
     let deleteline = '';
     let updateline = '';
@@ -43,66 +33,6 @@ $(function () {
             dataType: "json"
         });
     }
-
-
-    //function pour afficher tout les element du formulaire dans la modal
-
-    function afficherallmodal(abonneid,livreid){
-        $.ajax({
-            type: "post",
-            url: "controler/controler.php?action=afficherall",
-            success: function (data) {
-                console.log(data);
-                $('.abonnemodal').html('')
-                $(".livremodal").html('')
-                data['abonne'].forEach(data=>{
-                    if(data.idAbonne === abonneid ){
-                        $(".abonnemodal").append($('<option selected></option>').attr('value',data.idAbonne).text(data.nom+' '+data.prenom));
-                    }else{
-                        $(".abonnemodal").append($('<option></option>').attr('value',data.idAbonne).text(data.nom+' '+data.prenom));
-                    }
-                })
-                data['livre'].forEach(data=>{
-                    if(data.idLivre === livreid){
-                        $(".livremodal").append($('<option selected></option>').attr('value',data.idLivre).text(data.titre+' de '+data.auteur));
-                    }else{
-                        $(".livremodal").append($('<option></option>').attr('value',data.idLivre).text(data.titre+' '+data.auteur));
-                    }
-                });
-
-
-            },
-            dataType: "json"
-        });
-    }
-
-    //function pour afficher tout les element du formulaire
-
-    function afficherall(){
-        $.ajax({
-            type: "post",
-            url: "controler/controler.php?action=afficherall",
-            success: function (data) {
-                console.log(data);
-                let abonne = '';
-                let livre = '';
-                data['abonne'].forEach(data=>{
-                    abonne += '<option value="'+data.idAbonne+'">'+data.nom+' '+data.prenom+'</option>'
-                })
-                data['livre'].forEach(data=>{
-
-                    livre += '<option value="'+data.idLivre+'">'+data.titre+' de '+data.auteur+'</option>'
-                })
-
-                $(".livre").append(livre);
-                $(".abonne").append(abonne);
-
-
-            },
-            dataType: "json"
-        });
-    }
-
     /////////////////////////////////////////////////////////add
 
     $("#add").submit(function (e) {
@@ -144,7 +74,6 @@ $(function () {
                 $('#modele').attr('value',data.modele);
                 $('#couleur').attr('value',data.couleur);
                 $('#immatriculation').attr('value',data.immatriculation);
-                // afficherallmodal(data['emprunt'].abonneId,data['emprunt'].livreId,);
             },
             dataType: "json",
         });
@@ -209,7 +138,6 @@ let abonneid = ''
     });
     $("#modaldelete").on("click","#confirmdelete",function (e) {
         e.preventDefault();
-        abonneid = $(this).data('id');
         $.ajax({
             type: "POST",
             url: "controler/controler.php?action=deletevehicule",
@@ -226,6 +154,5 @@ let abonneid = ''
         });
 
     });
-    // afficherall()
     afficher();
 });

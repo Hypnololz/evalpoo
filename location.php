@@ -20,15 +20,15 @@ include_once('inc/header.php');
                         <div class="col-12 text-center">
                             <label for="id_vehicule" class="mx-auto col-form-label text-primary">conducteur</label>
                         </div>
-                        <select name="id_vehicule" class="abonnemodal">
-                            <option value="" >choisir un abonne</option>
+                        <select name="id_vehicule" class="conducteurmodal">
+                            <option value="" >choisir un conducteur</option>
                             <!--                    insert des option ici-->
                         </select>
                         <div class="col-12 text-center">
                             <label for="id_conducteur" class="mx-auto col-form-label text-primary">vehicule</label>
                         </div>
-                        <select name="id_conducteur" class="livremodal">
-                            <option value="" >choisir un livre</option>
+                        <select name="id_conducteur" class="vehiculemodal">
+                            <option value="" >choisir un vehicule</option>
                             <!--                    insert des option ici-->
                         </select>
                     </form>
@@ -81,15 +81,15 @@ include_once('inc/header.php');
                 <div class="col-12 text-center">
                     <label for="id_conducteur" class="mx-auto col-form-label text-primary">conducteur</label>
                 </div>
-                <select name="id_conducteur" class="abonne">
-                    <option value="" >choisir un abonne</option>
+                <select name="id_conducteur" class="conducteur">
+                    <option value="" >choisir un conducteur</option>
 <!--                    insert des option ici-->
                 </select>
                 <div class="col-12 text-center">
                     <label for="id_vehicule" class="mx-auto col-form-label text-primary">vehicule</label>
                 </div>
-                <select name="id_vehicule" class="livre">
-                    <option value="" >choisir un livre</option>
+                <select name="id_vehicule" class="vehicule">
+                    <option value="" >choisir un vehicule</option>
                     <!--                    insert des option ici-->
                 </select>
                 <div class="col-12 pt-3">

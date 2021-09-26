@@ -54,13 +54,10 @@ if ($action == 'affichermodaldeleteconducteur') {
     echo json_encode($conducteur);
 }
 if ($action == 'deleteconducteur') {
-
     $manager = new conducteurManager();
-    $obj = $manager->getbyid($_POST['id']);
-    $newobj = new conducteur($obj);
-    $manager->delete($newobj);
+    $manager->delete($_POST['id']);
     $result['resultat'] = 'success';
-
+    $result['id'] = $_POST['id'];
     echo json_encode($result);
 
 }
@@ -130,7 +127,7 @@ if ($action == 'deletevehicule') {
 
 }
 
-//////////////////////////////////////////////////////EMPRUNT////////////////////////////////////////////////////
+//////////////////////////////////////////////////////location////////////////////////////////////////////////////
 
 if($action == 'afficherall'){
     $managervehicule = new vehiculeManager();

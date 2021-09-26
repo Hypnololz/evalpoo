@@ -48,10 +48,10 @@ class conducteurManager extends cobdd
     }
 
 
-    public function delete(conducteur $conducteur)
+    public function delete($id)
     {
         $delete = $this->bdd->prepare("DELETE FROM vtc.conducteur WHERE conducteur.id_conducteur = :id");
-        $delete->bindValue(':id', $conducteur->getId_conducteur(), PDO::PARAM_INT);
+        $delete->bindValue(':id', $id, PDO::PARAM_INT);
         $delete->execute();
         $delete->closeCursor();
         return ($delete->rowCount());

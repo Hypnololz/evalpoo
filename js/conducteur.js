@@ -1,15 +1,4 @@
 $(function () {
-
-
-    let onglet = $('.nav-link');
-    console.log(onglet);
-    onglet.each(function () {
-        if ($(this).attr('href') == $(location).attr('href')) {
-            $(this).addClass('active');
-        } else { $(this).remove('active');}
-    });
-
-
     //declaration de variable
     let deleteline = '';
     let updateline = '';
@@ -43,63 +32,6 @@ $(function () {
     }
 
 
-    //function pour afficher tout les element du formulaire dans la modal
-
-    function afficherallmodal(abonneid,livreid){
-        $.ajax({
-            type: "post",
-            url: "controler/controler.php?action=afficherall",
-            success: function (data) {
-                console.log(data);
-                $('.abonnemodal').html('')
-                $(".livremodal").html('')
-                data['abonne'].forEach(data=>{
-                    if(data.idAbonne === abonneid ){
-                        $(".abonnemodal").append($('<option selected></option>').attr('value',data.idAbonne).text(data.nom+' '+data.prenom));
-                    }else{
-                        $(".abonnemodal").append($('<option></option>').attr('value',data.idAbonne).text(data.nom+' '+data.prenom));
-                    }
-                })
-                data['livre'].forEach(data=>{
-                    if(data.idLivre === livreid){
-                        $(".livremodal").append($('<option selected></option>').attr('value',data.idLivre).text(data.titre+' de '+data.auteur));
-                    }else{
-                        $(".livremodal").append($('<option></option>').attr('value',data.idLivre).text(data.titre+' '+data.auteur));
-                    }
-                });
-
-
-            },
-            dataType: "json"
-        });
-    }
-
-    //function pour afficher tout les element du formulaire
-
-    function afficherall(){
-        $.ajax({
-            type: "post",
-            url: "controler/controler.php?action=afficherall",
-            success: function (data) {
-                console.log(data);
-                let abonne = '';
-                let livre = '';
-                data['abonne'].forEach(data=>{
-                    abonne += '<option value="'+data.idAbonne+'">'+data.nom+' '+data.prenom+'</option>'
-                })
-                data['livre'].forEach(data=>{
-
-                    livre += '<option value="'+data.idLivre+'">'+data.titre+' de '+data.auteur+'</option>'
-                })
-
-                $(".livre").append(livre);
-                $(".abonne").append(abonne);
-
-
-            },
-            dataType: "json"
-        });
-    }
 
     /////////////////////////////////////////////////////////add
 
@@ -108,7 +40,7 @@ $(function () {
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "/controler/controler.php?action=ajouterconducteur",
+            url: "controler/controler.php?action=ajouterconducteur",
             data: $("#add").serialize(),
             success: function (data) {
                 console.log(data);
@@ -131,7 +63,7 @@ $(function () {
         updateline = $(this).closest('tr');
         $.ajax({
             type: "POST",
-            url: "/controler/controler.php?action=affichermodalconducteur",
+            url: "controler/controler.php?action=affichermodalconducteur",
             data: { id: conducteurid},
             success: function (data) {
                 $('#modalupdate').modal('show');
@@ -140,7 +72,6 @@ $(function () {
                 $('#id_conducteur').attr('value',data.id_conducteur);
                 $('#nom').attr('value',data.nom);
                 $('#prenom').attr('value',data.prenom);
-                // afficherallmodal(data['emprunt'].abonneId,data['emprunt'].livreId,);
             },
             dataType: "json",
         });
@@ -191,7 +122,7 @@ $(function () {
                 let tab = '';
                 $('#modaldeletetitle').html("supprimer l'emprunt")
                 $('#confirmdelete').attr('data-id',data.id_conducteur)
-                tab +='<h1> etes vous sur de vouloir supprimer le conducteur '+data.nom+' '+data.prenom+' </h1>'
+                tab +='<h1> etes vous sur de vouloir supprimer le conducteur '+data.nom+' '+data.prenom+' '+data.id_conducteur+' </h1>'
                 $('#modalinsert').html(tab);
                 $('#modaldelete').modal('show');
 
@@ -201,15 +132,14 @@ $(function () {
 
 
     });
-    $("#modaldelete").on("click","#confirmdelete",function (e) {
+    $("#confirmdelete").on("click",function (e) {
         e.preventDefault();
-        abonneid = $(this).data('id');
         $.ajax({
             type: "POST",
-            url: "http://localhost/backend/evalpoo/controler/controler.php?action=deleteconducteur",
+            url: "controler/controler.php?action=deleteconducteur",
             data: {id: abonneid},
             success: function (data) {
-                if (data['resultat'] === "success") {
+                if (data) {
                     deleteline.remove();
                     $('#modaldelete').modal('hide');
                 } else {
@@ -220,6 +150,5 @@ $(function () {
         });
 
     });
-    // afficherall()
     afficher();
 });
